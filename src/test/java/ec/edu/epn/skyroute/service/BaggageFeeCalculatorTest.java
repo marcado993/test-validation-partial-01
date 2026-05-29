@@ -34,7 +34,7 @@ public class BaggageFeeCalculatorTest {
 
     @Test 
     @DisplayName("Equipaje estándar, 1 maleta, 20 kg, pasajero regular, tarifa $30, caso de prueba 1")
-        void shouldCalculateStandardFeeWhenRegularPassenger() {
+        void CalculateStandardFeeWhenRegularPassenger() {
         // Arrange
         when(passengerService.isVip(regularPassengerId)).thenReturn(false);
 
@@ -43,6 +43,19 @@ public class BaggageFeeCalculatorTest {
 
         // Assert
         assertEquals(30.0, fee, 0.0001);
+    }
+    //este caso nos siver para ver un peso >25 nos da un valor de 80
+    @Test
+    @DisplayName("Exceso de peso, 1 maleta, 25 kg, pasajero regular, $80.00")
+    void CalculateOverweightFeeWhenRegularPassenger() {
+        // Arrange
+        when(passengerService.isVip(regularPassengerId)).thenReturn(false);
+
+        // Act
+        double fee = calculator.calculateFee(25.0, 1, regularPassengerId);
+
+        // Assert
+        assertEquals(80.0, fee, 0.0001);
     }
 
 }

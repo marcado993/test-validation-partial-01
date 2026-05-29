@@ -43,7 +43,7 @@ public class BaggageFeeCalculator {
         //y el passanger id no debe ser nulo
 
         if(weight <=0||bagCount <1|| passengerId == null){
-            throw new IllegalArgumentException("Parametros de equipaje inválidos");
+            throw new IllegalArgumentException("Parámetros de equipaje inválidos");
         }
         //vamos a delcarar ahora unas variables dado que ya se pasaron las validaciones
         double baseFee = 30.0;

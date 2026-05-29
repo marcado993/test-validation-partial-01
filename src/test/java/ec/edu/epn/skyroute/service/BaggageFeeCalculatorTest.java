@@ -83,4 +83,18 @@ public class BaggageFeeCalculatorTest {
         // Assert
         assertEquals(30.0, fee);
     }
+
+    @Test
+    @DisplayName("Lanza excepcion cuando el peso es invalido")
+    void shouldThrowExceptionWhenWeightIsZeroOrNegative() {
+        // Arrange
+
+        // Act
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> calculator.calculateFee(-1.0, 1, regularPassengerId));
+
+        // Assert
+        assertEquals("Parámetros de equipaje inválidos", ex.getMessage());
+    }
+
 }

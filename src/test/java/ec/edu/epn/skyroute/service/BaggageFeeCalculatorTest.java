@@ -71,5 +71,16 @@ public class BaggageFeeCalculatorTest {
         assertEquals(0.0, fee);
     }
 
+    @Test
+    @DisplayName("Caso límite VIP,2 maletas, 15 kg c/u, pasajero VIP,$30.00 (1ra gratis, 2da cobro normal)")
+    void ChargeNormalFeeWhenVipHaveTwoBags() {
+        // Arrange
+        when(passengerService.isVip(vipPassengerId)).thenReturn(true);
 
+        // Act
+        double fee = calculator.calculateFee(15.0, 2, vipPassengerId);
+
+        // Assert
+        assertEquals(30.0, fee);
+    }
 }

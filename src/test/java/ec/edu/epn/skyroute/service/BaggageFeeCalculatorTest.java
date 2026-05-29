@@ -70,7 +70,7 @@ public class BaggageFeeCalculatorTest {
         // Assert
         assertEquals(0.0, fee);
     }
-
+    //del cuarto test, un cliente vip tiene dos maletas pero una es gratis y la otra fee normal dado que <30
     @Test
     @DisplayName("Caso límite VIP,2 maletas, 15 kg c/u, pasajero VIP,$30.00 (1ra gratis, 2da cobro normal)")
     void ChargeNormalFeeWhenVipHaveTwoBags() {
@@ -83,6 +83,8 @@ public class BaggageFeeCalculatorTest {
         // Assert
         assertEquals(30.0, fee);
     }
+
+    //del quinto test donde o bien es cero o es negativo, entonces salta el mensaje de error
 
     @Test
     @DisplayName("Lanza excepcion cuando el peso es invalido")

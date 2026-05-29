@@ -42,9 +42,9 @@ public class BaggageFeeCalculatorTest {
         double fee = calculator.calculateFee(20.0, 1, regularPassengerId);
 
         // Assert
-        assertEquals(30.0, fee, 0.0001);
+        assertEquals(30.0, fee);
     }
-    //este caso nos siver para ver un peso >25 nos da un valor de 80
+    //este caso nos sirve para ver un peso >25 nos da un valor de 80
     @Test
     @DisplayName("Exceso de peso, 1 maleta, 25 kg, pasajero regular, $80.00")
     void CalculateOverweightFeeWhenRegularPassenger() {
@@ -55,7 +55,21 @@ public class BaggageFeeCalculatorTest {
         double fee = calculator.calculateFee(25.0, 1, regularPassengerId);
 
         // Assert
-        assertEquals(80.0, fee, 0.0001);
+        assertEquals(80.0, fee);
     }
+    //del terecer caso beneficio vip, vamos a utilizar mockito para poder simular passangerService
+    @Test
+    @DisplayName("\tBeneficio VIP, 1 maleta, 15 kg, pasajero VIP $0.00 (requiere Mockito)")
+    void ChargeZeroWhenVipWithOneBagUnderOrEqual23() {
+        // Arrange
+        when(passengerService.isVip(vipPassengerId)).thenReturn(true);
+
+        // Act
+        double fee = calculator.calculateFee(15.0, 1, vipPassengerId);
+
+        // Assert
+        assertEquals(0.0, fee);
+    }
+
 
 }

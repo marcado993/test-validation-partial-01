@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaggageFeeCalculator {
 
+    //primeramente prodeceremos a implementar la lógica de negocio propiamente dicha de esta 
+    //clase.
+
     private final PassengerService passengerService;
 
     public BaggageFeeCalculator(PassengerService passengerService) {
@@ -35,6 +38,31 @@ public class BaggageFeeCalculator {
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
         // TODO: Implementar lógica de negocio y validación de excepciones
-        return 0.0;
+        //
+        //primero vamos con las validaciones, peso no debe ser menor que 0, el bagcount no debe ser menor que 1
+        //y el passanger id no debe ser nulo
+
+        if(weight <=0||bagCount <1|| passengerId == null){
+            throw new illegalArgumentException("Parametros de equipaje inválidos");
+        }
+        //vamos a delcarar ahora unas variables dado que ya se pasaron las validaciones
+        double baseFee = 30.0;
+        double overheightFee = 50.0;
+        boolean isVip = passengerService.isVip(passengerId);
+
+        double total = 0.0;
+        for (int i = 0; i < bagCount; i++) {
+            if (isVip && i == 0 && weight <= 23) {
+                continue; // De la lógica tenemos que, la primera maleta gratis para VIP
+            }
+            total += baseFee;
+            if (weight > 23) {
+                total += overheightFee;
+            }
+        }
+
+
+
+        return total;
     }
 }

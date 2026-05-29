@@ -88,12 +88,39 @@ public class BaggageFeeCalculatorTest {
 
     @Test
     @DisplayName("Lanza excepcion cuando el peso es invalido")
-    void shouldThrowExceptionWhenWeightIsZeroOrNegative() {
+    void ThrowExceptionWhenWeightIsZeroOrNegative() {
         // Arrange
 
         // Act
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> calculator.calculateFee(-1.0, 1, regularPassengerId));
+
+        // Assert
+        assertEquals("Parámetros de equipaje inválidos", ex.getMessage());
+    }
+
+    // un caso extra para verificar 
+    @Test
+    @DisplayName("VIP paga recargo si su maleta pesa más de 23 kg, caso borde donde un vip no puede hacer uso de su beneficio")
+    void ChargeVipWhenOverweight() {
+        // Arrange
+        when(passengerService.isVip(vipPassengerId)).thenReturn(true);
+
+        // Act
+        double fee = calculator.calculateFee(24.0, 1, vipPassengerId);
+
+        // Assert
+        assertEquals(80.0, fee);
+    }
+
+    @Test
+    @DisplayName("Lanza excepcion cuando el pasajero es nulo, caso prueba para ver un datos inválidos")
+    void shouldThrowExceptionWhenPassengerIdIsNull() {
+        // Arrange
+
+        // Act
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> calculator.calculateFee(20.0, 1, null));
 
         // Assert
         assertEquals("Parámetros de equipaje inválidos", ex.getMessage());

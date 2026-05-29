@@ -31,5 +31,18 @@ public class BaggageFeeCalculatorTest {
         regularPassengerId = 55L;
         vipPassengerId = 10L;
     }
-    
+
+    @Test 
+    @DisplayName("Equipaje estándar, 1 maleta, 20 kg, pasajero regular, tarifa $30, caso de prueba 1")
+        void shouldCalculateStandardFeeWhenRegularPassenger() {
+        // Arrange
+        when(passengerService.isVip(regularPassengerId)).thenReturn(false);
+
+        // Act
+        double fee = calculator.calculateFee(20.0, 1, regularPassengerId);
+
+        // Assert
+        assertEquals(30.0, fee, 0.0001);
+    }
+
 }
